@@ -32,11 +32,8 @@ resource "aws_quicksight_dashboard" "from_template" {
 
       data_set_references {
         data_set_placeholder = var.dataset_placeholder
-
-        # Accept either a dataset ID or a full ARN; fallback to var.dataset_id
-        data_set_arn = startswith(try(each.value.dataset, ""), "arn:aws:quicksight:")
-          ? try(each.value.dataset, "")
-          : "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${try(each.value.dataset, var.dataset_id)}"
+        # ONE-LINER: accept ARN or ID (falls back to var.dataset_id)
+        data_set_arn = startswith(try(each.value.dataset, ""), "arn:aws:quicksight:") ? try(each.value.dataset, "") : format("arn:aws:quicksight:%s:%s:dataset/%s", var.region, var.account_id, try(each.value.dataset, var.dataset_id))
       }
     }
   }
