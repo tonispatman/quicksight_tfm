@@ -83,7 +83,7 @@ resource "aws_quicksight_dashboard" "from_template_v2" {
 }
 
 # 4) Second dashboard from the same template
-resource "aws_quicksight_dashboard" "from_template_v2" {
+resource "aws_quicksight_dashboard" "client_2" {
   aws_account_id      = var.account_id
   dashboard_id        = "saas-sales-dash-for-client-2"
   name                = "SaaS Sales Dashboard for Client 2"
