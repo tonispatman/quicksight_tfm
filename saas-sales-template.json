@@ -1,0 +1,45 @@
+{
+    "Arn": "arn:aws:quicksight:us-east-1:942486875728:template/saas-sales-template",
+    "Name": "SaaS Sales Template",
+    "Version": {
+        "CreatedTime": "2025-10-27T19:37:10.240000+00:00",
+        "VersionNumber": 2,
+        "Status": "CREATION_SUCCESSFUL",
+        "DataSetConfigurations": [
+            {
+                "Placeholder": "saas_sales_ml",
+                "DataSetSchema": {
+                    "ColumnSchemaList": [
+                        {
+                            "Name": "country_cs",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        },
+                        {
+                            "Name": "country_en",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        },
+                        {
+                            "Name": "country_el",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        }
+                    ]
+                },
+                "ColumnGroupSchemaList": []
+            }
+        ],
+        "Description": "v1 - created from analysis",
+        "SourceEntityArn": "arn:aws:quicksight:us-east-1:942486875728:analysis/saas-sales-from-tf",
+        "Sheets": [
+            {
+                "SheetId": "75f2aff6-351a-4271-9caf-af2284344ddc",
+                "Name": "Sheet 1"
+            }
+        ]
+    },
+    "TemplateId": "saas-sales-template",
+    "LastUpdatedTime": "2025-10-27T19:37:10.234000+00:00",
+    "CreatedTime": "2025-10-27T13:09:13.102000+00:00"
+}

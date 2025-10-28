@@ -1,0 +1,24 @@
+[ec2-user@ip-10-192-10-26 qs-template-dash]$ aws quicksight list-templates --aws-account-id 942486875728 --region us-east-1
+{
+    "TemplateSummaryList": [
+        {
+            "Arn": "arn:aws:quicksight:us-east-1:942486875728:template/saas-sales-template",
+            "TemplateId": "saas-sales-template",
+            "Name": "SaaS Sales Template",
+            "LatestVersionNumber": 2,
+            "CreatedTime": "2025-10-27T13:09:13.102000+00:00",
+            "LastUpdatedTime": "2025-10-27T19:37:10.234000+00:00"
+        }
+    ],
+    "Status": 200,
+    "RequestId": "090703ad-2b05-4dc0-854d-38c02a42b1df"
+}
+
+aws quicksight create-analysis \
+  --aws-account-id 942486875728 \
+  --analysis-id "view-saas-template" \
+  --name "View SaaS Sales Template" \
+  --source-entity "SourceTemplate={Arn=arn:aws:quicksight:us-east-1:942486875728:template/saas-sales-template,DataSetReferences=[{DataSetPlaceholder=saas_sales_ml,DataSetArn=arn:aws:quicksight:us-east-1:942486875728:dataset/2493a4d0-dace-4c24-acf2-1bf2d28f3059}]}"
+
+
+
