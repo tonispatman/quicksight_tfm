@@ -1,4 +1,4 @@
-# 1) Template from existing Analysis
+# --- QuickSight Template from existing Analysis ---
 resource "aws_quicksight_template" "from_analysis" {
   aws_account_id      = var.account_id
   template_id         = var.template_id
@@ -17,7 +17,7 @@ resource "aws_quicksight_template" "from_analysis" {
   }
 }
 
-# 2) Dashboards from the Template (N dashboards via for_each)
+# --- Dashboards from the Template (supports many via for_each) ---
 resource "aws_quicksight_dashboard" "from_template" {
   for_each = var.dashboards
 
@@ -33,9 +33,8 @@ resource "aws_quicksight_dashboard" "from_template" {
       data_set_references {
         data_set_placeholder = var.dataset_placeholder
 
-        # Accept either a dataset ID or a full ARN per dashboard.
-        # Fallback to var.dataset_id if not provided.
-        data_set_arn = can(regex("^arn:aws:quicksight:", try(each.value.dataset, "")))
+        # Accept either a dataset ID or a full ARN; fallback to var.dataset_id
+        data_set_arn = startswith(try(each.value.dataset, ""), "arn:aws:quicksight:")
           ? try(each.value.dataset, "")
           : "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${try(each.value.dataset, var.dataset_id)}"
       }
