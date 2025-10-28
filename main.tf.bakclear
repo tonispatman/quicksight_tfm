@@ -1,0 +1,69 @@
+# 1) Template from existing Analysis
+resource "aws_quicksight_template" "from_analysis" {
+  aws_account_id      = var.account_id
+  template_id         = var.template_id
+  name                = var.template_name
+  version_description = var.template_version_description
+
+  source_entity {
+    source_analysis {
+      arn = "arn:aws:quicksight:${var.region}:${var.account_id}:analysis/${var.analysis_id}"
+      data_set_references {
+        data_set_placeholder = var.dataset_placeholder
+        data_set_arn         = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
+      }
+    }
+  }
+
+  # (optional) avoid cosmetic diffs
+  # lifecycle { ignore_changes = [version_description] }
+}
+
+# 2) Dashboard from the Template
+resource "aws_quicksight_dashboard" "from_template" {
+  aws_account_id      = var.account_id
+  dashboard_id        = var.dashboard_id
+  name                = var.dashboard_name
+  version_description = var.dashboard_version_description
+
+  source_entity {
+    source_template {
+      arn = aws_quicksight_template.from_analysis.arn
+      data_set_references {
+        data_set_placeholder = var.dataset_placeholder
+        data_set_arn         = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
+      }
+    }
+  }
+
+  # Give your user full management permissions
+  permissions {
+    principal = "arn:aws:quicksight:${var.region}:${var.account_id}:user/default/antonios"
+    actions = [
+      "quicksight:DeleteDashboard",
+      "quicksight:DescribeDashboard",
+      "quicksight:DescribeDashboardPermissions",
+      "quicksight:ListDashboardVersions",
+      "quicksight:QueryDashboard",
+      "quicksight:UpdateDashboard",
+      "quicksight:UpdateDashboardPermissions",
+      "quicksight:UpdateDashboardPublishedVersion",
+    ]
+  }
+
+  # Optional: Readers group read-only (set readers_group_name in tfvars)
+  dynamic "permissions" {
+    for_each = var.readers_group_name == null ? [] : [1]
+    content {
+      principal = "arn:aws:quicksight:${var.region}:${var.account_id}:group/default/${var.readers_group_name}"
+      actions = [
+        "quicksight:DescribeDashboard",
+        "quicksight:ListDashboardVersions",
+        "quicksight:QueryDashboard"
+      ]
+    }
+  }
+
+  # (optional) avoid cosmetic diffs
+  # lifecycle { ignore_changes = [version_description] }
+}
