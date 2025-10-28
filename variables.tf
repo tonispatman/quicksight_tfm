@@ -3,20 +3,11 @@ variable "region" { type = string }
 
 # Existing resources
 variable "analysis_id" { type = string } # e.g., "saas-sales-from-tf"
-variable "dataset_id" { type = string }  # default dataset for mappings
+variable "dataset_id" { type = string }  # default dataset ID for mappings (not ARN)
 
-# New resources
-variable "template_id" { type = string } # e.g., "saas-sales-template"
-
-# Optional tweaks
-variable "dataset_placeholder" {
-  type    = string
-  default = "saas_sales_ml"
-}
-
-variable "readers_group_name" {
-  type    = string
-  default = null # set to "Readers" to enable viewer permissions for that group
+# Template config
+variable "template_id" {
+  type = string # e.g., "saas-sales-template"
 }
 
 variable "template_name" {
@@ -24,26 +15,43 @@ variable "template_name" {
   default = "SaaS Sales Template (from analysis)"
 }
 
-variable "dashboard_version_description" {
-  type    = string
-  default = "v1 - created from template"
-}
-
 variable "template_version_description" {
   type    = string
   default = "v1 - created from analysis"
 }
 
-# Define your dashboards here in one place
-# Key = dashboard_id; value = name + (optional) version_description, dataset_id
+# Placeholders and defaults
+variable "dataset_placeholder" {
+  type    = string
+  default = "saas_sales_ml"
+}
+
+variable "dashboard_version_description" {
+  type    = string
+  default = "v1 - created from template"
+}
+
+# Permissions config
+variable "owner_user_name" {
+  type    = string
+  default = "antonios" # QuickSight username in the 'default' namespace
+}
+
+variable "readers_group_name" {
+  type    = string
+  default = null # set to "Readers" to enable view perms for that group
+}
+
+# Define dashboards in one place
+# Key = dashboard_id; value = name + (optional) version_description, dataset (ID or ARN)
 variable "dashboards" {
   type = map(object({
     name                = string
     version_description = optional(string)
-    dataset_id          = optional(string)
+    dataset             = optional(string) # dataset ID or full ARN
   }))
 
-  # Example defaults (adjust or move to *.tfvars)
+  # Example defaults (override in *.tfvars for real usage)
   default = {
     "saas-sales-dash-tf" = {
       name = "SaaS Sales Dashboard (Terraform)"
@@ -53,8 +61,8 @@ variable "dashboards" {
       version_description = "v1 - created from template"
     }
     "saas-sales-dash-for-client-2" = {
-      name       = "SaaS Sales Dashboard for Client 2"
-      dataset_id = "2493a4d0-dace-4c24-acf2-1bf2d28f3059" # override if needed
+      name    = "SaaS Sales Dashboard for Client 2"
+      dataset = "2493a4d0-dace-4c24-acf2-1bf2d28f3059" # override with ID or full ARN
     }
   }
 }

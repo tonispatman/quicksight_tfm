@@ -1,10 +1,13 @@
 terraform {
-  required_version = ">= 1.6"
-  required_providers {
-    aws = { source = "hashicorp/aws", version = "~> 5.60" }
-  }
-}
+  required_version = ">= 1.5.0"
 
-provider "aws" {
-  region = var.region
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0"
+    }
+  }
+
+  # To use remote state later, create a backend file (see backend_s3.tf.example)
+  # backend "local" {}
 }
