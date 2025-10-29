@@ -114,3 +114,36 @@ resource "aws_quicksight_dashboard" "client_2" {
     ]
   }
 }
+
+# 5) third dashboard from the same template
+resource "aws_quicksight_dashboard" "client_3" {
+  aws_account_id      = var.account_id
+  dashboard_id        = "saas-sales-dash-for-client-3"
+  name                = "SaaS Sales Dashboard for Client 3"
+  version_description = "v1 - created from template"
+
+  source_entity {
+    source_template {
+      arn = aws_quicksight_template.from_analysis.arn
+      data_set_references {
+        data_set_placeholder = var.dataset_placeholder
+        data_set_arn         = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
+      }
+    }
+  }
+
+  # keep only your user permission
+  permissions {
+    principal = "arn:aws:quicksight:${var.region}:${var.account_id}:user/default/antonios"
+    actions = [
+      "quicksight:DeleteDashboard",
+      "quicksight:DescribeDashboard",
+      "quicksight:DescribeDashboardPermissions",
+      "quicksight:ListDashboardVersions",
+      "quicksight:QueryDashboard",
+      "quicksight:UpdateDashboard",
+      "quicksight:UpdateDashboardPermissions",
+      "quicksight:UpdateDashboardPublishedVersion",
+    ]
+  }
+}
