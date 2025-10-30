@@ -6,11 +6,10 @@ resource "aws_quicksight_dashboard" "poc_from_imported_template" {
 
   source_entity {
     source_template {
+      # If you set var.template_alias_name (e.g., "stg"), local.template_arn resolves to:
+      # arn:aws:quicksight:REGION:ACCOUNT:template/TEMPLATE_ID/alias/stg
+      # Otherwise it’s the base template ARN.
       arn = local.template_arn
-
-      # If you're NOT using an alias, pin a version by setting template_version_number (e.g., 1).
-      # If alias is set, leave this null.
-      version_number = var.template_alias_name == null ? var.template_version_number : null
 
       data_set_references {
         data_set_placeholder = var.dataset_placeholder
