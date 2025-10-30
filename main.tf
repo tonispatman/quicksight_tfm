@@ -33,17 +33,14 @@ resource "aws_quicksight_dashboard" "poc_from_imported_template" {
   }
 }
 
-resource "aws_quicksight_dashboard" "second_client" {
+resource "aws_quicksight_dashboard" "poc_from_imported_template_2" {
   aws_account_id      = var.account_id
-  dashboard_id        = "second client"
-  name                = "second client"
-  version_description = "second client"
+  dashboard_id        = "saas-sales-dash-stg-2"
+  name                = "SaaS Sales Dashboard (STG #2)"
+  version_description = "POC from imported template (second)"
 
   source_entity {
     source_template {
-      # If you set var.template_alias_name (e.g., "stg"), local.template_arn resolves to:
-      # arn:aws:quicksight:REGION:ACCOUNT:template/TEMPLATE_ID/alias/stg
-      # Otherwise it’s the base template ARN.
       arn = local.template_arn
 
       data_set_references {
