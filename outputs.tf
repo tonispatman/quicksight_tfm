@@ -1,4 +1,6 @@
-output "template_id" { value = aws_quicksight_template.from_analysis.template_id }
-output "template_arn" { value = aws_quicksight_template.from_analysis.arn }
-output "dashboard_id" { value = aws_quicksight_dashboard.from_template.dashboard_id }
-output "dashboard_arn" { value = aws_quicksight_dashboard.from_template.arn }
+output "dashboard_arn" {
+  value = aws_quicksight_dashboard.from_imported_template.arn
+}
+output "dashboard_console_url" {
+  value = "https://${var.region}.quicksight.aws.amazon.com/sn/dashboards/${var.dashboard_id}"
+}

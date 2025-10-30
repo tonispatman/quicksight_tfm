@@ -1,0 +1,238 @@
+{
+    "Status": 200,
+    "Name": "SaaS Sales Template",
+    "TemplateId": "saas-sales-template",
+    "ResourceStatus": "CREATION_SUCCESSFUL",
+    "Definition": {
+        "DataSetConfigurations": [
+            {
+                "Placeholder": "saas_sales_ml",
+                "DataSetSchema": {
+                    "ColumnSchemaList": [
+                        {
+                            "Name": "country_cs",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        },
+                        {
+                            "Name": "country_en",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        },
+                        {
+                            "Name": "country_el",
+                            "DataType": "STRING",
+                            "GeographicRole": "COUNTRY"
+                        }
+                    ]
+                },
+                "ColumnGroupSchemaList": []
+            }
+        ],
+        "Sheets": [
+            {
+                "SheetId": "75f2aff6-351a-4271-9caf-af2284344ddc",
+                "Name": "Sheet 1",
+                "ParameterControls": [
+                    {
+                        "Dropdown": {
+                            "ParameterControlId": "15ca9c9a-59cd-419b-8cb1-1b83144e3a02",
+                            "Title": "language",
+                            "SourceParameterName": "language",
+                            "DisplayOptions": {
+                                "SelectAllOptions": {
+                                    "Visibility": "VISIBLE"
+                                },
+                                "TitleOptions": {
+                                    "Visibility": "VISIBLE",
+                                    "FontConfiguration": {
+                                        "FontSize": {
+                                            "Relative": "MEDIUM"
+                                        }
+                                    }
+                                },
+                                "InfoIconLabelOptions": {
+                                    "Visibility": "HIDDEN"
+                                }
+                            },
+                            "Type": "SINGLE_SELECT",
+                            "SelectableValues": {
+                                "Values": [
+                                    "",
+                                    "cs",
+                                    "el",
+                                    "en"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "Visuals": [
+                    {
+                        "BarChartVisual": {
+                            "VisualId": "a813991e-dd7b-4a97-a420-e1eb09b71eea",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>{title_country}</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BarChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "a8e2b270-fb59-49cd-8c30-44707ea08d0f.0.1759749227709",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "saas_sales_ml",
+                                                        "ColumnName": "country_display"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [],
+                                        "Colors": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Orientation": "HORIZONTAL",
+                                "BarsArrangement": "CLUSTERED",
+                                "CategoryAxis": {
+                                    "ScrollbarOptions": {
+                                        "VisibleRange": {
+                                            "PercentRange": {
+                                                "From": 72.91666666666664,
+                                                "To": 93.74999999999997
+                                            }
+                                        }
+                                    }
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "DETAILED",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "a8e2b270-fb59-49cd-8c30-44707ea08d0f.0.1759749227709",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    }
+                ],
+                "Layouts": [
+                    {
+                        "Configuration": {
+                            "GridLayout": {
+                                "Elements": [
+                                    {
+                                        "ElementId": "a813991e-dd7b-4a97-a420-e1eb09b71eea",
+                                        "ElementType": "VISUAL",
+                                        "ColumnSpan": 18,
+                                        "RowSpan": 12
+                                    }
+                                ],
+                                "CanvasSizeOptions": {
+                                    "ScreenCanvasSizeOptions": {
+                                        "ResizeOption": "FIXED",
+                                        "OptimizedViewPortWidth": "1600px"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "SheetControlLayouts": [
+                    {
+                        "Configuration": {
+                            "GridLayout": {
+                                "Elements": [
+                                    {
+                                        "ElementId": "15ca9c9a-59cd-419b-8cb1-1b83144e3a02",
+                                        "ElementType": "PARAMETER_CONTROL",
+                                        "ColumnSpan": 2,
+                                        "RowSpan": 1
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "ContentType": "INTERACTIVE"
+            }
+        ],
+        "CalculatedFields": [
+            {
+                "DataSetIdentifier": "saas_sales_ml",
+                "Name": "country_display",
+                "Expression": "ifelse(\r\n  ${language} = 'el', {country_el},\r\n  ${language} = 'cs', {country_cs},\r\n  {country_en}\r\n)\r\n"
+            }
+        ],
+        "ParameterDeclarations": [
+            {
+                "StringParameterDeclaration": {
+                    "ParameterValueType": "SINGLE_VALUED",
+                    "Name": "language",
+                    "DefaultValues": {
+                        "StaticValues": [
+                            "en"
+                        ]
+                    },
+                    "ValueWhenUnset": {
+                        "ValueWhenUnsetOption": "NULL"
+                    }
+                }
+            }
+        ],
+        "FilterGroups": [],
+        "AnalysisDefaults": {
+            "DefaultNewSheetConfiguration": {
+                "InteractiveLayoutConfiguration": {
+                    "Grid": {
+                        "CanvasSizeOptions": {
+                            "ScreenCanvasSizeOptions": {
+                                "ResizeOption": "FIXED",
+                                "OptimizedViewPortWidth": "1600px"
+                            }
+                        }
+                    }
+                },
+                "SheetContentType": "INTERACTIVE"
+            }
+        },
+        "Options": {
+            "WeekStart": "SUNDAY"
+        },
+        "QueryExecutionOptions": {
+            "QueryExecutionMode": "AUTO"
+        }
+    },
+    "RequestId": "8e07b9e2-009d-487c-9433-05d94d10b861"
+}

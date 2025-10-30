@@ -1,41 +1,18 @@
-variable "account_id" { type = string }
-variable "region" { type = string }
+variable "account_id"  { type = string }
+variable "region"      { type = string }
 
-# Existing resources
-variable "analysis_id" { type = string } # e.g. "saas-sales-from-tf"
-variable "dataset_id" { type = string }  # e.g. "2493a4d0-dace-4c24-acf2-1bf2d28f3059"
+# NEW template we just created with CLI
+variable "template_id" { type = string }              # e.g., "saas-sales-template-stg"
+variable "template_alias_name" { type = string, default = null }   # e.g., "stg" (optional)
+variable "template_version_number" { type = number, default = null } # use if not using alias
 
-# New resources
-variable "template_id" { type = string }  # e.g. "saas-sales-template"
-variable "dashboard_id" { type = string } # e.g. "saas-sales-dash-tf-2"
+# Dataset you want to bind (must match the template’s placeholder schema)
+variable "dataset_id"  { type = string }              # e.g., "2493a4d0-dace-4c24-acf2-1bf2d28f3059"
+variable "dataset_placeholder" { type = string, default = "saas_sales_ml" }
 
-# Optional tweaks
-variable "dataset_placeholder" {
-  type    = string
-  default = "saas_sales_ml"
-}
+# Dashboard to create
+variable "dashboard_id"   { type = string }           # e.g., "saas-sales-dash-stg"
+variable "dashboard_name" { type = string, default = "SaaS Sales Dashboard (Imported Template POC)" }
 
-variable "readers_group_name" {
-  type    = string
-  default = null
-}
-
-variable "template_name" {
-  type    = string
-  default = "SaaS Sales Template (from analysis)"
-}
-
-variable "dashboard_name" {
-  type    = string
-  default = "SaaS Sales Dashboard (from template)"
-}
-
-variable "template_version_description" {
-  type    = string
-  default = "v1 - created from analysis"
-}
-
-variable "dashboard_version_description" {
-  type    = string
-  default = "v1 - created from template"
-}
+# Owner/editor of the dashboard
+variable "owner_user_name" { type = string, default = "antonios" }
