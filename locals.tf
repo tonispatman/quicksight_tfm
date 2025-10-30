@@ -1,6 +1,9 @@
 locals {
-  analysis_arn      = "arn:aws:quicksight:${var.region}:${var.account_id}:analysis/${var.analysis_id}"
-  dataset_arn       = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
-  template_arn      = "arn:aws:quicksight:${var.region}:${var.account_id}:template/${var.template_id}"
-  readers_group_arn = var.readers_group_name == null ? null : "arn:aws:quicksight:${var.region}:${var.account_id}:group/default/${var.readers_group_name}"
+  template_base_arn = "arn:aws:quicksight:${var.region}:${var.account_id}:template/${var.template_id}"
+  template_arn      = var.template_alias_name != null
+                    ? "${local.template_base_arn}/alias/${var.template_alias_name}"
+                    : local.template_base_arn
+
+  dataset_arn    = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
+  owner_user_arn = "arn:aws:quicksight:${var.region}:${var.account_id}:user/default/${var.owner_user_name}"
 }

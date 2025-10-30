@@ -1,14 +1,4 @@
-locals {
-  template_base_arn = "arn:aws:quicksight:${var.region}:${var.account_id}:template/${var.template_id}"
-  template_arn      = var.template_alias_name != null
-                    ? "${local.template_base_arn}/alias/${var.template_alias_name}"
-                    : local.template_base_arn
-
-  dataset_arn    = "arn:aws:quicksight:${var.region}:${var.account_id}:dataset/${var.dataset_id}"
-  owner_user_arn = "arn:aws:quicksight:${var.region}:${var.account_id}:user/default/${var.owner_user_name}"
-}
-
-resource "aws_quicksight_dashboard" "from_imported_template" {
+resource "aws_quicksight_dashboard" "poc_from_imported_template" {
   aws_account_id      = var.account_id
   dashboard_id        = var.dashboard_id
   name                = var.dashboard_name
@@ -18,15 +8,8 @@ resource "aws_quicksight_dashboard" "from_imported_template" {
     source_template {
       arn = local.template_arn
 
-      # If you didn’t make an alias, pin the version explicitly
-      dynamic "version_number" {
-        for_each = var.template_alias_name == null && var.template_version_number != null ? [1] : []
-        content {
-          # HCL limitation: version_number is a simple attribute, so we assign via a separate attribute:
-        }
-      }
-      # Workaround: set version_number only when provided
-      # (Terraform block supports it directly as an argument)
+      # If you're NOT using an alias, pin a version by setting template_version_number (e.g., 1).
+      # If alias is set, leave this null.
       version_number = var.template_alias_name == null ? var.template_version_number : null
 
       data_set_references {
